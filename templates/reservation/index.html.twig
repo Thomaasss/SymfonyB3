@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+    <section class="rides">
+
+        {% for ride in rides %}
+            <article>
+                <h2>{{ ride.departure }} -> {{ ride.arrival }}</h2>
+                <div class="metadata departure">Départ le {{ ride.departureDateTime | date ('d/m/Y')}} à {{ ride.departureDateTime | date ('H:i')}}</div>
+                <div class="metadata arrival">Arrivée le {{ ride.arrivalDateTime | date ('d/m/Y')}} à {{ ride.arrivalDateTime | date ('H:i')}}</div>
+                <div class="metadata">{{ride.train.title}}</div>
+                <div class="content">
+                    <a href="{{ path('booking', {'id': ride.id}) }}" class="btn btn-primary">Afficher ou ajouter un passager</a>
+                    <a href="{{ path('booking_edit', {'id': ride.id}) }}" class="btn btn-primary">Modifier</a>
+                </div>
+            </article>
+        {% endfor %}
+
+    </section>
+
+{% endblock %}

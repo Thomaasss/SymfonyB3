@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+    <section class="trains">
+        <h1>Ajouter un train</h1>
+        {{ form_start(formTrain) }}
+
+        <div class="form-group">
+            <label for="">Dénomination</label>
+            {{ form_widget(formTrain.title) }}
+        </div>
+        <div class="form-group">
+            <label for="">Description</label>
+            {{ form_widget(formTrain.description) }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Ajouter le véhicule</button>
+
+        {{ form_end(formTrain)}}
+        <br /><br />
+        <h1>Liste des trains</h1><br />
+        {% for train in trains %}
+            <article>
+                <h2>{{train.title}}</h2>
+                <div class="metadata">{{train.description}}</div>
+                <div class="content">
+                    <h3>Trajets associés :</h3>
+                    <section id="bookings">
+                        {% for ride in train.rides %}
+                        <div class="booking">
+                            <div class="row">
+                                <div class="col-4">Départ de {{ride.departure}} (<small>{{ride.departureDateTime | date('d/m/Y à H:i')}}</small>)</div>
+                                <div class="col">Arrivée à {{ride.arrival}} (<small>{{ride.arrivalDateTime | date('d/m/Y à H:i')}}</small>)</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </section>
+                </div>
+            </article>
+            <hr />
+        {% endfor %}
+        <br />
+    </section>
+
+{% endblock %}

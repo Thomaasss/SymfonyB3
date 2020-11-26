@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<article>
+    <h2>{{ride.departure}} -> {{ride.arrival}}</h2>
+    <div class="metadata departure">Départ le {{ride.departureDateTime | date('d/m/Y')}} à {{ride.departureDateTime | date('H:i')}}</div>
+    <div class="metadata arrival">Arrivée le {{ride.arrivalDateTime | date('d/m/Y')}} à {{ride.arrivalDateTime | date('H:i')}}</div>
+    <div class="metadata">{{ride.train.title}}</div>
+    <div class="content">
+        <h1>Ajouter un passager</h1>
+        {{ form_start(formBooking) }}
+
+        <div class="form-group">
+            <label for="">Prénom et nom</label>
+            {{ form_widget(formBooking.user) }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Enregistrer le passager</button>
+
+        {{ form_end(formBooking)}}
+        <br /><br />
+        {# <a href="{{ path('booking') }}" class="btn btn-primary">Réserver ce trajet</a> #}
+        <h3>Passagers enregistrés : </h3>
+        <section id="bookings">
+            {% for booking in ride.bookings %}
+            <div class="booking">
+                <div class="row">
+                    <div class="col-3">{{booking.user}} (<small>{{booking.bookedAt | date('d/m/Y à H:i')}}</small>)</div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+</article>
+
+{% endblock %}
